@@ -1,5 +1,9 @@
 # Python development
 
+## Requisite
+
+Install `direnv` for docker build arg.
+
 ## Manual setup
 
 You have to create `.envrc` from `.envrc.sample`.
