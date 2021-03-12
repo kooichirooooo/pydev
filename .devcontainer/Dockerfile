@@ -50,16 +50,7 @@ RUN $HOME/.poetry/bin/poetry completions zsh > $HOME/.oh-my-zsh/custom/plugins/p
 RUN terraform -install-autocomplete
 RUN echo 'export PATH="$HOME/.poetry/bin:$PATH"' >> $HOME/.zshrc
 
-# Git config
-ARG GIT_USERNAME
-ARG GIT_EMAIL
-ARG GITHUB_CLI_TOKEN
-COPY .gitconfig /home/vscode/
-RUN git config --global user.name $GIT_USERNAME \
-    && git config --global user.email $GIT_EMAIL
-
-RUN echo $GITHUB_CLI_TOKEN > /tmp/githubtoken \
-    && gh auth login --with-token < /tmp/githubtoken \
-    && rm /tmp/githubtoken
+COPY gitconfig /home/vscode/.gitconfig
+COPY git.sh /home/vscode/
 
 CMD ["/bin/zsh"]

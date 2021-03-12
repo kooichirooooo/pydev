@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Remote container environment variable
-.envrc
+.devcontainer/devcontainer.env
