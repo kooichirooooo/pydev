@@ -14,13 +14,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && rm -rf /var/lib/apt/lists/*
 
 # Packer and Terraform
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-RUN apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-RUN apt-get update \
-    && apt-get install -y packer \
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/hashicorp/packer/releases/download/nightly/packer_linux_arm64.zip
+RUN unzip packer_linux_arm64.zip
+RUN mv packer /usr/local/bin/
 
 RUN wget https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_arm64.zip
 RUN unzip terraform_0.14.7_linux_arm64.zip
@@ -30,7 +26,7 @@ RUN mv terraform /usr/local/bin/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 \
     && apt-add-repository https://cli.github.com/packages \
     && apt update \
-    && apt install gh \
+    && apt install -y gh \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
